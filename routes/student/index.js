@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
     
 })
 
-router.get('/', async (req, res) => {
+router.get('/', middlware.authMiddleware1 ,async (req, res) => {
 
     const students = await Candidate.find({})
 
@@ -47,8 +47,11 @@ router.get('/', async (req, res) => {
 
 router.put('/:id', middlware.authMiddleware1 ,async (req, res) => {
 
-    console.log(req.body)
-    console.log(req.params)
+    if(req.user.id !== req.params.id) {
+        return res.status(401).json({
+            messgae: "Unauthorized"
+        })
+    }
 
     let student = await Candidate.findById(req.params.id)
 
