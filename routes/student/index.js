@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
     
 })
 
-router.get('/', middlware.authMiddleware1 ,async (req, res) => {
+router.get('/', middlware.authMiddleware2 ,async (req, res) => {
 
     const students = await Candidate.find({})
 
@@ -45,7 +45,7 @@ router.get('/', middlware.authMiddleware1 ,async (req, res) => {
 
 })
 
-router.put('/:id', middlware.authMiddleware1 ,async (req, res) => {
+router.put('/:id', middlware.authMiddleware2 ,async (req, res) => {
 
     if(req.user.id !== req.params.id) {
         return res.status(401).json({

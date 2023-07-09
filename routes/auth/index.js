@@ -1,4 +1,5 @@
 const express = require('express')
+const jwt = require('jsonwebtoken')
 const Candidate = require('../../model/candidate')
 const router = express.Router()
 
@@ -10,7 +11,9 @@ router.post('/', async (req, res) => {
 
         if (user) {
 
-            res.cookie('user', user.email)
+            const token = jwt.sign(user.email, 'test')
+
+            res.cookie('user', token)
 
             return res.status(200).json({
                 message: 'User successfully loggedin!',
