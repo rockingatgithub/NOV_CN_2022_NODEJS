@@ -2,10 +2,13 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const Candidate = require('../../model/candidate')
 const router = express.Router()
+// const passport = require('./../../config/passportLocalStrategy')
+const passportJWT = require('./../../config/passportJWT')
 
-router.post('/', async (req, res) => {
+router.post('/' ,async (req, res) => {
 
     try {
+
 
         let user = await Candidate.findOne({ email: req.body.email, password: req.body.password })
 
@@ -13,12 +16,11 @@ router.post('/', async (req, res) => {
 
             const token = jwt.sign(user.email, 'test')
 
-            res.cookie('user', token)
-
             return res.status(200).json({
                 message: 'User successfully loggedin!',
-                user,
-                role: 'candidate'
+                user: req.user,
+                role: 'candidate',
+                token
             })
         }
 

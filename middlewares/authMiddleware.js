@@ -74,3 +74,19 @@ exports.authMiddleware2 = async (req, res, next) => {
     
 
 }
+
+exports.authMiddleware3 = async (req, res, next) => {
+
+    console.log( 'passport user in middleware',  req.user)
+    if(req.user) {
+        next() 
+    } else {
+        return res.status(401).json({
+            message: "Unauthorised!"
+        })
+    }
+    
+
+
+
+}

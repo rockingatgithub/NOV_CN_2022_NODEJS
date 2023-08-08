@@ -1,4 +1,5 @@
 const express = require('express')
+const passport = require('./../../config/passportJWT')
 const middlware = require('../../middlewares/authMiddleware')
 const router = express.Router()
 const Candidate = require('../../model/candidate')
@@ -34,7 +35,9 @@ router.post('/', async (req, res) => {
     
 })
 
-router.get('/', middlware.authMiddleware2 ,async (req, res) => {
+router.get('/', passport.authenticate('jwt', {failureRedirect: '/create-session'}) ,async (req, res) => {
+
+    console.log(req.user)
 
     const students = await Candidate.find({})
 
