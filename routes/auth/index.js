@@ -5,6 +5,8 @@ const router = express.Router()
 // const passport = require('./../../config/passportLocalStrategy')
 const passportJWT = require('./../../config/passportJWT')
 
+const GoogleOAuth = require('google-auth-library')
+
 router.post('/' ,async (req, res) => {
 
     try {
@@ -36,6 +38,24 @@ router.post('/' ,async (req, res) => {
         })
     }
 
+
+})
+
+router.post('/google',  async (req, res) => {
+
+
+    const client = new GoogleOAuth.OAuth2Client('416750331254-ppnm8ca2409p2hfqaglr222au3kc3f99.apps.googleusercontent.com')
+
+    const ticket = await client.verifyIdToken({
+        idToken: req.body.token,
+        audience: '416750331254-ppnm8ca2409p2hfqaglr222au3kc3f99.apps.googleusercontent.com'
+    })
+
+    const profileData = ticket.getPayload()
+
+    return res.status(200).json({
+        data: profileData
+    })
 
 })
 
