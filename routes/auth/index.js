@@ -6,6 +6,7 @@ const router = express.Router()
 const passportJWT = require('./../../config/passportJWT')
 
 const GoogleOAuth = require('google-auth-library')
+const generator = require('generate-password')
 
 router.post('/' ,async (req, res) => {
 
@@ -51,10 +52,24 @@ router.post('/google',  async (req, res) => {
         audience: '416750331254-ppnm8ca2409p2hfqaglr222au3kc3f99.apps.googleusercontent.com'
     })
 
-    const profileData = ticket.getPayload()
+    const {name, email} = ticket.getPayload()
+
+    // store the user in our database....
+
+    let candidate = await Candidate.findOne({ email: email })
+
+    if(!candidate) {
+
+        const password = generator.generate({
+            length: 8,
+            numbers: true
+        })
+        candidate = await Candidate.create({name, email, password})
+
+    }
 
     return res.status(200).json({
-        data: profileData
+        data: candidate
     })
 
 })

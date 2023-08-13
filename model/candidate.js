@@ -16,10 +16,15 @@ const candidateSchema = new mongoose.Schema({
         required: true
     },
 
+    companies: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Company'
+    }]
+
 }, {
     timestamps: true
 })
 
-const Candidate = mongoose.model('Student', candidateSchema)
+const Candidate = mongoose.model('Candidate', candidateSchema)
 
 module.exports = Candidate
