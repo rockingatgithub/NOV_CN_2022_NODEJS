@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
-const db = require('./config/mongoose')
+const mongodb = require('./config/mongoose')
 // const passport = require('./config/passportLocalStrategy')
 const passportJWT = require('./config/passportJWT')
 const PORT = 8000
@@ -26,6 +26,6 @@ app.use(passportJWT.initialize())
 
 app.use('/', require('./routes'))
 
-app.listen(PORT, () => {
+mongodb.dbConnection.then(() => app.listen(PORT, () => {
     console.log("Server is running!")
-})
+}))
