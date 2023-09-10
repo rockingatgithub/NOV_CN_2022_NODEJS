@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/interview_dashboard')
+mongoose.connect(process.env.MONGODB_URL)
 
 const db = mongoose.connection
 
