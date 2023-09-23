@@ -45,11 +45,11 @@ router.post('/' ,async (req, res) => {
 router.post('/google',  async (req, res) => {
 
 
-    const client = new GoogleOAuth.OAuth2Client('416750331254-ppnm8ca2409p2hfqaglr222au3kc3f99.apps.googleusercontent.com')
+    const client = new GoogleOAuth.OAuth2Client('416750331254-2a1v89960f28bma1vdmq9v9t12gf7kmp.apps.googleusercontent.com')
 
     const ticket = await client.verifyIdToken({
         idToken: req.body.token,
-        audience: '416750331254-ppnm8ca2409p2hfqaglr222au3kc3f99.apps.googleusercontent.com'
+        audience: '416750331254-2a1v89960f28bma1vdmq9v9t12gf7kmp.apps.googleusercontent.com'
     })
 
     const {name, email} = ticket.getPayload()
